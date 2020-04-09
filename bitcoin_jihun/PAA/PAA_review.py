@@ -29,10 +29,19 @@ def PAA(data, segment):
         res = [data[indices].sum() / data.shape[0] for indices in np.split(input_index, nUniques.cumsum())[:-1]]
         # print(np.split(input_index, nUniques.cumsum())[:-1])
         print(res)
+        
 
 # data = np.random.random_integers(low=0, high= 15, size=15)
 # segment = 4
 # PAA(data, segment)
-data = [1,2,3,4,5,6,7,8,9,10,10,10,10,10,10]
-segment = 4
-PAA(data, segment)
+# data = [1,2,3,4,5,6,7,8,9,10,10,10,10,10,10]
+# segment = 4
+# PAA(data, segment)
+arrays = []
+for line in open('Datasets/lightCurveA.txt'):
+    arrays.append(np.array([float(val) for val in line.rstrip('\n').split(' ') if val != '']))
+arrays = np.array(arrays).reshape(1,-1)
+print(len(arrays))
+print(arrays.shape)
+segment = 36
+PAA(arrays, segment)

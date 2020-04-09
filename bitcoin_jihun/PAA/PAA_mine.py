@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import pandas as pd
 
 def PAA(data, seg):
     data = np.array(data)
@@ -15,13 +16,19 @@ def PAA(data, seg):
         for j in range(math.floor(tmp), math.floor(tmp+len_seg)):
             get_sum += data[j]
             count+=1
-        print(get_sum)
-        print(count)
-        avg[i] = get_sum/count
+        # print("get_sum: ",get_sum,"\n")
+        # print("count: ",count,"\n")
+        if(count!=0):
+            avg[i] = get_sum/count
         tmp = tmp+len_seg
 
-    print(avg)
+    print("avg: ",avg,"\n")
     
-data = [1,2,3,4,5,6,7,8,9,10,10,10,10,10,10]
-segment = 4
-PAA(data, segment)
+arrays = []
+for line in open('Datasets/lightCurveA.txt'):
+    arrays.append(np.array([float(val) for val in line.rstrip('\n').split(' ') if val != '']))
+arrays = np.array(arrays).reshape(-1)
+print(len(arrays))
+# print(arrays.shape)
+segment = 36
+PAA(arrays, segment)
