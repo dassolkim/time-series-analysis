@@ -7,55 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 from PAA.PAA_dev import *
-
-# def paa(arr, sections):
-#     try:
-#         assert arr.shape[0] != sections
-#     except AssertionError as e:
-#         return np.copy(arr)
-#     else:
-#         if arr.shape[0] % sections == 0:
-#             sectionarr = np.array_split(arr, sections)
-#             res = np.array([item.mean() for item in sectionarr])
-#             res = np.array(
-#                 [sample for item in res for sample in 
-#                 [item.mean()] * item.shape[0]]
-#             )
-#         else:
-#             sectionarr = np.zeros(sections)
-#             space_size = np.arange(0, arr.shape[0] * sections - 1)
-#             outputIndex = space_size // arr.shape[0]
-#             inputIndex = space_size // sections
-#             uniques, nUniques = np.unique(outputIndex, return_counts=True)
-            
-#             res = [arr[indices].sum() / arr.shape[0] for indices in
-#                    np.split(inputIndex, nUniques.cumsum())[:-1]]
-#             indices = ([row.mean() for row in np.split(inputIndex, nUniques.cumsum())[:-1]])
-#     return res
-def PAA(data, segment):
-    
-    len_data = len(data)
-    div_len_data = len(data)/segment
-
-    data=np.array(data)
-
-    if len_data % segment == 0:
-        sectionedArr = np.array_split(data, segment)
-        res = np.array([item.mean() for item in sectionedArr])
-
-    else:
-        value_space= np.arange(0, len_data * segment)   #[0,...,길이*분할 수]
-        output_index = value_space // len_data          #[0,...,길이*분할 수]/길이
-        input_index = value_space // segment            #[0,...,길이*분할 수]/분할 수
-        uniques, nUniques = np.unique(output_index, return_counts=True)#배열의 고유한 요소를 찾는다. uniques: 고유한 값을 제공하는 입력 배열의 인덱스, nUniques: 입력 배열에 각 고유값이 나타나는 횟수
-        # print(uniques,"\n",nUniques)
-        # print(input_index)
-        # print(output_index)
-        # input
-        res = [data[indices].sum() / data.shape[0] for indices in np.split(input_index, nUniques.cumsum())[:-1]]
-        # print(np.split(input_index, nUniques.cumsum())[:-1])
-    #print(res)
-    return res
+from PAA.PAA_review import *
 # #####################################################################################################
 # arraysA = []                                                                                        #
 # arraysB = []                                                                                        #

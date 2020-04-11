@@ -9,8 +9,6 @@ import numpy as np
 def PAA(data, segment):
     
     len_data = len(data)
-    div_len_data = len(data)/segment
-
     data=np.array(data)
 
     if len_data % segment == 0:
@@ -23,22 +21,22 @@ def PAA(data, segment):
         input_index = value_space // segment#[0,...,길이*분할 수]/분할 수
         uniques, nUniques = np.unique(output_index, return_counts=True)#배열의 고유한 요소를 찾는다. uniques: 고유한 값을 제공하는 입력 배열의 인덱스, nUniques: 입력 배열에 각 고유값이 나타나는 횟수
         #################################################################
-        # print("value_space: ",value_space)
-        # print("1: ",uniques,"\n2: ",nUniques.cumsum())
-        # print("3: ",input_index)
-        # print("4: ",output_index)
+        print("value_space: ",value_space)
+        print("1: ",uniques,"\n2: ",nUniques.cumsum())
+        print("3: ",input_index)
+        print("4: ",output_index)
         #################################################################
         res = [data[indices].sum() / data.shape[0] for indices in np.split(input_index, nUniques.cumsum())[:-1]]
         #[0,...,길이]의 인덱스가 4개씩 있는 배열을 길이씩 나누고 나눠진 배열을 인덱스에 넣어 모두 더한 합 --> 예제 돌려보면서 이해하길 바람..
         
         #################################################################
-        # for indices in np.split(input_index, nUniques.cumsum())[:-1]:
-        #     print("indices :",indices)
-        # print("5: ",np.split(input_index, nUniques.cumsum())[:-1])
-        # print("6: ",data.shape[0])
-        # print("7: ",res)
-        # for indices in np.split(input_index, nUniques.cumsum())[:-1]:
-        #     print("data: ", data[indices],data[indices].sum())
+        for indices in np.split(input_index, nUniques.cumsum())[:-1]:
+            print("indices :",indices)
+        print("5: ",np.split(input_index, nUniques.cumsum())[:-1])
+        print("6: ",data.shape[0])
+        print("7: ",res)
+        for indices in np.split(input_index, nUniques.cumsum())[:-1]:
+            print("data: ", data[indices],data[indices].sum())
         #################################################################
 
 # data = np.random.random_integers(low=0, high= 15, size=15)
