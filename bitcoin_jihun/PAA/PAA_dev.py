@@ -9,10 +9,11 @@ def paa(arr, sections):
         if arr.shape[0] % sections == 0:
             sectionarr = np.array_split(arr, sections)
             res = np.array([item.mean() for item in sectionarr])
-            res = np.array(
-                (sample for item in res for sample in 
-                [item.mean()] * item.shape[0])
-            )
+            # res = np.array(
+            #     (sample for item in res for sample in 
+            #     [item.mean()] * item.shape[0])
+            # )
+            # 동작 잘 안함..
         else:
             sectionarr = np.zeros(sections) # section 만큼의 0으로 초기화된 배열 생성
             space_size = np.arange(0, arr.shape[0] * sections - 1) # 0에서 arr의 개수에 section의 곱에 1을 뺀만큼 나열
@@ -26,7 +27,7 @@ def paa(arr, sections):
             
             res = [arr[indices].sum() / arr.shape[0] for indices in
                    np.split(inputIndex, nUniques.cumsum())[:-1]]
-            indices = ([row.mean() for row in np.split(inputIndex, nUniques.cumsum())[:-1]])
+            indices = ([row.mean() for row in np.split(inputIndex, nUniques.cumsum())[:-1]]) # 왜 존재하는지 이해 불가
             print("indices: ",indices)
     return res
 
