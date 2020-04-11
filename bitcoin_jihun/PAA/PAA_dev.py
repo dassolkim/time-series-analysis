@@ -1,3 +1,5 @@
+import numpy as np
+
 def paa(arr, sections):
     try:
         assert arr.shape[0] != sections
@@ -22,3 +24,12 @@ def paa(arr, sections):
                    np.split(inputIndex, nUniques.cumsum())[:-1]]
             indices = ([row.mean() for row in np.split(inputIndex, nUniques.cumsum())[:-1]])
     return res
+
+arrays = []
+for line in open('bitcoin_jihun/Datasets/lightCurveA.txt'):
+    arrays.append(np.array([float(val) for val in line.rstrip('\n').split(' ') if val != '']))
+arrays = np.array(arrays).reshape(-1)
+print(len(arrays))
+# print(arrays.shape)
+segment = 36
+print(paa(arrays, segment))

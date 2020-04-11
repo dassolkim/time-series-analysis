@@ -6,7 +6,32 @@ from scipy.spatial.distance import euclidean
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+from PAA.PAA_dev import *
 
+# def paa(arr, sections):
+#     try:
+#         assert arr.shape[0] != sections
+#     except AssertionError as e:
+#         return np.copy(arr)
+#     else:
+#         if arr.shape[0] % sections == 0:
+#             sectionarr = np.array_split(arr, sections)
+#             res = np.array([item.mean() for item in sectionarr])
+#             res = np.array(
+#                 [sample for item in res for sample in 
+#                 [item.mean()] * item.shape[0]]
+#             )
+#         else:
+#             sectionarr = np.zeros(sections)
+#             space_size = np.arange(0, arr.shape[0] * sections - 1)
+#             outputIndex = space_size // arr.shape[0]
+#             inputIndex = space_size // sections
+#             uniques, nUniques = np.unique(outputIndex, return_counts=True)
+            
+#             res = [arr[indices].sum() / arr.shape[0] for indices in
+#                    np.split(inputIndex, nUniques.cumsum())[:-1]]
+#             indices = ([row.mean() for row in np.split(inputIndex, nUniques.cumsum())[:-1]])
+#     return res
 def PAA(data, segment):
     
     len_data = len(data)
@@ -47,18 +72,18 @@ file_list_csv = [file for file in file_list if file.endswith(".csv")]
 
 # print(file_list_csv)
 arraysA = pd.read_csv("bitcoin_jihun/DTW/dataset/{}".format(file_list_csv[10]))
-arraysB = pd.read_csv("bitcoin_jihun/DTW/dataset/{}".format(file_list_csv[10]))
+arraysB = pd.read_csv("bitcoin_jihun/DTW/dataset/{}".format('HymanMinsky.csv'))
 
 arraysA['Date'] = arraysA['Date'].map(pd.to_datetime)
-arraysB['Date'] = arraysB['Date'].map(pd.to_datetime)
+arraysB.set_index(arraysB['x'])
 
 arraysA = np.array(arraysA['Close']).reshape(-1)
-arraysB = np.array(arraysB['Close']).reshape(-1)
+arraysB = np.array(arraysB['y']).reshape(-1)
 
-# arraysA_ = np.array(PAA(arraysA, 100)).reshape(-1)
-arraysB_ = np.array(PAA(arraysB, 379)).reshape(-1)
-arraysA_ = arraysA
-# arraysB_ = arraysB
+arraysA_ = np.array(paa(arraysA, 100)).reshape(-1)
+# arraysB_ = np.array(PAA(arraysB, 381)).reshape(-1)
+# arraysA_ = arraysA
+arraysB_ = arraysB
 
 distance, path = fastdtw(arraysA, arraysB, dist=euclidean)
 distance_, path_ = fastdtw(arraysA_, arraysB_, dist=euclidean)
