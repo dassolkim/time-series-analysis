@@ -11,8 +11,8 @@ np.random.seed(np.random.randint(10))
 # dfA=np.random.randn(128)
 # dfB=np.random.randn(128)
 
-dfA = np.range(0,20)
-dfB = np.range(4,24)
+dfA = np.arange(0,20)
+dfB = np.arange(4,24)
 # def plot_df(df, x, y, title="", xlabel='Date', ylabel='Value', dpi=100, color='red'):
     # plt.figure(figsize=(16,5), dpi=dpi)
     # plt.plot(x, y, color=color)
