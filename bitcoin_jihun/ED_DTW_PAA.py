@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import math
 from fastdtw import fastdtw
+from dtw import dtw
 from scipy.spatial.distance import euclidean
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -32,12 +33,12 @@ arraysB.set_index(arraysB['x'])
 arraysA = np.array(arraysA['Close']).reshape(-1)
 arraysB = np.array(arraysB['y']).reshape(-1)
 
-arraysA_ = np.array(paa(arraysA, 100)).reshape(-1)
+arraysA_ = np.array(paa(arraysA, 64)).reshape(-1)
 # arraysB_ = np.array(PAA(arraysB, 381)).reshape(-1)
 # arraysA_ = arraysA
 arraysB_ = arraysB
 
-distance, path = fastdtw(arraysA, arraysB, dist=euclidean)
+distance, cost_matrix, acc_cost_matrix, path = dtw(arraysA, arraysB, dist=euclidean)
 distance_, path_ = fastdtw(arraysA_, arraysB_, dist=euclidean)
 
 # distance = np.float(distance)
@@ -70,5 +71,10 @@ ax[0].set_ylabel("normalized price")
 ax[1].set_title("A vs. B {}| distance: {}".format(file_list_csv[10],round(distance_, 3)), fontsize=15)
 ax[1].set_xlabel("time steps")
 ax[1].set_ylabel("normalized price")
+
+print("Corrcoef: \n",np.corrcoef(arraysA_, arraysB_[:64]))
+arraysB_dtw = [arraysB[p] for p in path[1]]
+print("Corrcoef: \n",np.corrcoef(arraysA, arraysB_dtw[:380]))
+
 
 plt.show()
