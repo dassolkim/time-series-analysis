@@ -51,3 +51,14 @@ while(True):
 #         example_plot(each_ax)
 # plt.tight_layout()
 ###################################################
+
+for label, data in g:
+    fig, ax = plt.subplots(1, 2, figsize=(12, 3))
+    ax[0].plot(data.Close)
+    ax[1].plot(minsky_df.adj_y)
+    ax[0].set_title("BitCoin sequence")
+    ax[1].set_title("Hyman Minsky Chart")
+    for tick in ax[0].get_xticklabels():
+        tick.set_rotation(40)
+    plt.tight_layout()
+    plt.show()
