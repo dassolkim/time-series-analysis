@@ -21,7 +21,7 @@ y = np.array(df['y']).reshape(-1,)
 # data = np.concatenate((X,y), axis=1)
 print(X)
 print(y)
-C_range =  np.arange(1,1000)
+C_range =  np.logspace(-5,10,16)
 gamma_range = np.logspace(-4, 3, 8)
 # param_grid = dict(gamma=gamma_range, C=C_range)
 
@@ -53,12 +53,12 @@ for this_C in C_range:
     stop = timeit.default_timer()
     # C.append(scoretest)
     # gamma.append(scoretest)
-    
+    print("SVM for Non Linear \n C:{}, gamma:{}, Training Score : {:2f}, Test Score : {:2f}".format(this_C,clf._gamma,scoretrain,scoretest))
+    print(stop - start)
+    print()
     if scoretest > temp[-1]:
         temp = [this_C, clf._gamma,scoretest]
-        print("SVM for Non Linear \n C:{}, gamma:{}, Training Score : {:2f}, Test Score : {:2f}".format(this_C,clf._gamma,scoretrain,scoretest))
-        print(stop - start)
-        print()
+        
 
 # C = C_range[C.index(max(C))]
 # gamma = gamma_range[gamma.index(max(gamma))]
