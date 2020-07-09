@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from sklearn.preprocessing import MinMaxScaler
-
+import timeit
 
 data = loadmat("C:/Users/tony9/OneDrive/문서/KNU/DKE_assignment/Time series/time-series-analysis/bitcoin_jihun/Compare/satellite.mat")
 df = {k:v for k, v in data.items() if k[0] != '_'}
@@ -28,13 +28,16 @@ X_train, X_test, y_train, y_test = train_test_split(data[:,:-1], data[:,-1], tes
 for weights in ['uniform', 'distance']:
     Scores = []
     t = [0,0,0]
-    for n_neighbors in range(1,15):
+    for n_neighbors in range(1,16):
         # we create an instance of Neighbours Classifier and fit the data.
         clf = neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
+        start = timeit.default_timer()
         clf.fit(X_train, y_train)
         score = clf.score(X_test, y_test)
+        stop = timeit.default_timer()
         Scores.append([n_neighbors, weights, score])
         print("{} neighbors, {} weights, {} TestScore".format(n_neighbors, weights, score))
+        print(stop-start)
         if t[-1] < score:
             t = [n_neighbors, weights, score]
         # Plot the decision boundary. For that, we will assign a color to each
