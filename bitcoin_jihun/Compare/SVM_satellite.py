@@ -21,7 +21,7 @@ y = np.array(df['y']).reshape(-1,)
 # data = np.concatenate((X,y), axis=1)
 print(X)
 print(y)
-C_range =  np.logspace(-2,5,8)
+C_range =  np.arange(1,1000)
 gamma_range = np.logspace(-4, 3, 8)
 # param_grid = dict(gamma=gamma_range, C=C_range)
 
@@ -39,24 +39,26 @@ temp = [0, 0, 0]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=42)
 
-for this_gamma in C_range:
-    for this_C in gamma_range:
-        clf = Pipeline([
-            ("scaler", StandardScaler()),
-            ("linear_svc", SVC(kernel='rbf', C=this_C, gamma=this_gamma))
-            ])
-        start = timeit.default_timer()
-        clf.fit(X_train,y_train)
-        scoretrain = clf.score(X_train,y_train)
-        scoretest  = clf.score(X_test,y_test)
-        stop = timeit.default_timer()
-        # C.append(scoretest)
-        # gamma.append(scoretest)
-        print("SVM for Non Linear \n Gamma: {} C:{} Training Score : {:2f} Test Score : {:2f}\n".format(this_gamma,this_C,scoretrain,scoretest))
+for this_C in C_range:
+    # for this_C in gamma_range:
+    clf = SVC(kernel='rbf',C=this_C, gamma="scale")
+    # Pipeline([
+    #     # ("scaler", StandardScaler()),
+    #     ("linear_svc", SVC(kernel='rbf', C=this_C, gamma=this_gamma))
+    #     ])
+    start = timeit.default_timer()
+    clf.fit(X_train,y_train)
+    scoretrain = clf.score(X_train,y_train)
+    scoretest  = clf.score(X_test,y_test)
+    stop = timeit.default_timer()
+    # C.append(scoretest)
+    # gamma.append(scoretest)
+    
+    if scoretest > temp[-1]:
+        temp = [this_C, clf._gamma,scoretest]
+        print("SVM for Non Linear \n C:{}, gamma:{}, Training Score : {:2f}, Test Score : {:2f}".format(this_C,clf._gamma,scoretrain,scoretest))
         print(stop - start)
-        if scoretest > temp[-1]:
-            temp = [this_gamma, this_C, scoretest]
-        
+        print()
 
 # C = C_range[C.index(max(C))]
 # gamma = gamma_range[gamma.index(max(gamma))]
