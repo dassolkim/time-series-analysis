@@ -63,3 +63,8 @@ for this_C in C_range:
 # C = C_range[C.index(max(C))]
 # gamma = gamma_range[gamma.index(max(gamma))]
 print("C: {} gamma: {}".format(temp[0], temp[1]))
+
+# SVM은 support vector들만으로 최대 마진을 구해서 Decision boundary를 구하는 방식이기에 KNN에 비해서 속도가 빠르지만 
+# 전수조사를 수행하는 KNN에 비해 정확도는 낮을것이라고 예측
+# 하지만 정확도는 서로 유사했고
+# 속도는 상대적으로 KNN이 더 빨랐음
