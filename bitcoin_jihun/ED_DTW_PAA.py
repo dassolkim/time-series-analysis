@@ -24,7 +24,7 @@ file_list = os.listdir(data_path)
 file_list_csv = [file for file in file_list if file.endswith(".csv")]
 
 # print(file_list_csv)
-arraysA = pd.read_csv("bitcoin_jihun/DTW/dataset/{}".format(file_list_csv[10]))
+arraysA = pd.read_csv("bitcoin_jihun/DTW/dataset/{}".format(file_list_csv[6]))
 arraysB = pd.read_csv("bitcoin_jihun/DTW/dataset/{}".format('HymanMinsky.csv'))
 
 arraysA['Date'] = arraysA['Date'].map(pd.to_datetime)

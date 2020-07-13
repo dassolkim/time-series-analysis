@@ -53,9 +53,9 @@ for this_C in C_range:
     stop = timeit.default_timer()
     # C.append(scoretest)
     # gamma.append(scoretest)
-    print("SVM for Non Linear \n C:{}, gamma:{}, Training Score : {:2f}, Test Score : {:2f}".format(this_C,clf._gamma,scoretrain,scoretest))
+    print("SVM for Non Linear C:{}, gamma:{}, Training Score : {:2f}, Test Score : {:2f}".format(this_C,clf._gamma,scoretrain,scoretest))
     print(stop - start)
-    print()
+    # print()
     if scoretest > temp[-1]:
         temp = [this_C, clf._gamma,scoretest]
         
